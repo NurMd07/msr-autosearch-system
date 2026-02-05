@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html class="h-full" lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MSR Autosearches status</title>
+    <link rel="stylesheet" href="main.css" />
+  </head>
+  <body class="bg-gray-300 md:h-full">
+    <div
+      class="header flex justify-center items-center p-4 bg-gray-100 shadow-md relative"
+    >
+    <div class="w-1/3 absolute md:relative"></div>
+    <div class="flex justify-center items-center w-auto md:w-1/3 ">
+      <div
+        class="ms-logo h-10 w-10 md:h-12 md:w-12 flex flex-wrap gap-[2px] justify-center content-center "
+      >
+        <div class="top-left w-[35%] h-[35%] bg-[#F25022]"></div>
+        <div class="top-right w-[35%] h-[35%] bg-[#7FBA00]"></div>
+        <div class="bottom-left w-[35%] h-[35%] bg-[#00A4EF]"></div>
+        <div class="bottom-right w-[35%] h-[35%] bg-[#FFB900]"></div>
+      </div>
+      <h1 class="text-[1.2rem] md:text-2xl text-gray-800 tracking-wide font-medium font-sans ml-4 ">
+        MSR Autosearches <span class="border-b">Status</span>
+      </h1>
+      </div>
+      <div class="msr-id text-xs text-gray-400 md:text-gray-500 md:w-1/3 text-end absolute bottom-[-1.25rem] right-2 md:right-0 md:relative"></div>
+    </div>
+    <div
+      class="content mx-auto w-full md:w-4/5 h-3/4 mt-6 md:mt-12 flex flex-col md:flex-row gap-y-6 md:gap-y-4 md:gap-x-8 p-5"
+    >
+      <div class="main flex-2 flex flex-col gap-5 md:gap-4">
+        <div
+          class="schedule flex flex-col flex-1 bg-gray-100 shadow-lg rounded-md "
+        >
+          <div class="heading">
+            <h2
+              class="text-2xl flex justify-between items-center font-bold text-gray-700 p-4 border-b border-b-4 border-gray-300 tracking-wide"
+            >
+              📅 Schedule
+              <div class="current-time"><h2 class="current-time-value text-gray-600 bg-gray-200 text-xs font-semibold p-2 rounded-lg">8 Jan 12:42 AM</h2></div>
+   
+            </h2>
+          </div>
+          <div
+            class="schedule-content flex flex-col flex-1 justify-center p-4 md:p-7 "
+          >
+            <h3
+              class="reset-time  font-bold text-md text-gray-700 p-2 pb-3 flex justify-between"
+            >
+              Reset Time :
+              <span class="reset-time-value text-sm pl-2 text-gray-500">-</span>
+            </h3>
+
+            <h3
+              class="random-time1 font-semibold text-md text-gray-700 p-2 flex justify-between items-center"
+            >
+              <span class="w-1/3"
+                >Random Time 1️⃣
+                <span
+                  class="random-time1-platform text-xs text-gray-500"
+                ></span>
+                : </span
+              ><span
+                class="random-time1-value  text-sm font-normal pl-2 text-gray-500"
+                >-</span
+              >
+            </h3>
+            <h3
+              class="random-time2  font-semibold text-md text-gray-700 p-2 pb-3  flex justify-between"
+            >
+              <span class="w-1/3"
+                >Random Time 2️⃣
+                <span
+                  class="random-time2-platform text-xs text-gray-500"
+                ></span>
+                : </span
+              ><span
+                class="random-time2-value text-sm font-normal pl-2 text-gray-500"
+                >-</span
+              >
+            </h3>
+            <h3
+              class="completion-time shadow-inner font-semibold text-sm text-gray-600 p-2 flex justify-between"
+            >
+              Completion Time :<span
+                class="completion-time-value font-normal text-sm pl-2 text-gray-500"
+                >-</span
+              >
+            </h3>
+          </div>
+        </div>
+        <div class="flex flex-col md:flex-row flex-1 gap-3">
+          <div
+            class="mobile flex-1 bg-gray-100 shadow-md rounded-md flex flex-col justify-between"
+          >
+            <div class="heading">
+              <h2
+                class="text-xl text-gray-700 font-bold p-4 border-b border-b-2 border-gray-300 tracking-wide"
+              >
+                📱 Mobile
+              </h2>
+            </div>
+            <div
+              class="mobile-content flex flex-col justify-center items-center p-4 pt-0"
+            >
+              <h3 class="text-md font-semibold p-2">
+                Running : <span class="mobile-content-running"></span>
+              </h3>
+              <h3 class="text-md font-semibold p-2">
+                Completed : <span class="mobile-content-completed"></span>
+              </h3>
+              <h3 class="text-md font-semibold p-2">
+                ⌛ Schedule :
+                <span
+                  class="mobile-content-schedule text-sm font-normal text-gray-500"
+                  >🕒</span
+                >
+              </h3>
+            </div>
+            <div></div>
+          </div>
+          <div
+            class="pc flex-1 bg-gray-100 shadow-md rounded-md flex flex-col justify-between"
+          >
+            <div class="heading">
+              <h2
+                class="text-xl text-gray-700 font-bold p-4 border-b border-b-2 border-gray-300 tracking-wide"
+              >
+                🖥️ PC
+              </h2>
+            </div>
+            <div
+              class="pc-content flex flex-col justify-center items-center p-4 pt-0"
+            >
+              <h3 class="text-md font-semibold p-2">
+                Running : <span class="pc-content-running"></span>
+              </h3>
+              <h3 class="text-md font-semibold p-2">
+                Completed : <span class="pc-content-completed"></span>
+              </h3>
+              <h3 class="text-md font-semibold p-2">
+                ⌛ Schedule :
+                <span
+                  class="pc-content-schedule text-sm font-normal text-gray-500"
+                  >🕒</span
+                >
+              </h3>
+            </div>
+            <div></div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="log flex-1 h-full  bg-gray-100 flex flex-col justify-between rounded-md"
+      >
+        <div class="log-content font-sans text-xs p-2 leading-loose h-full min-h-[20rem] max-h-[26rem] md:max-h-full  overflow-scroll overflow-x-hidden m-4 
+        shadow-inner bg-gray-200"></div>
+        <div class="footer ">
+          <h2
+            class="text-xl text-gray-700 font-bold p-4 border-t border-t-4 border-gray-300 flex justify-center items-center ps-0 "
+          >
+            📋 LOGS
+          </h2>
+        </div>
+          
+      </div>
+   
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/plugin/utc.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/plugin/timezone.js"></script>
+
+    <script src="main.js"></script>
+  </body>
+</html>

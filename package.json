@@ -1,0 +1,30 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start:webpage": "node app.js",
+    "start:autosearch": "node ./src/controller.js",
+    "build:css": "tailwindcss -i ./src/input.css -o ./public/main.css --minify",
+    "watch:css": "tailwindcss -i ./src/input.css -o ./public/main.css --watch"
+  },
+  "dependencies": {
+    "@tailwindcss/cli": "^4.1.18",
+    "axios": "^1.13.2",
+    "chokidar": "^5.0.0",
+    "dotenv": "^17.2.3",
+    "ejs": "^3.1.10",
+    "express": "^5.2.1",
+    "lowdb": "^7.0.1",
+    "minimist": "^1.2.8",
+    "moment-timezone": "^0.6.0",
+    "puppeteer": "^24.22.3",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2",
+    "tailwindcss": "^4.1.18"
+  }
+}

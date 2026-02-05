@@ -1,0 +1,18 @@
+{
+  "status": {
+    "firstRun": false,
+    "firstRunTime": null
+  },
+  "schedule": {
+    "resetTime": 1770282000000,
+    "completionTime": 20976000,
+    "randomTime1": 1770226810147,
+    "randomTime2": 1770251580810
+  },
+  "progress1": {
+    "randomTime1Running": true,
+    "randomTime1Completed": false,
+    "randomTime1IsMobile": false
+  },
+  "progress2": {}
+}
