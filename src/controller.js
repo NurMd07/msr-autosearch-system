@@ -76,6 +76,11 @@ async function runTimes(ENV, DEBUG) {
 
 const logFilePath = path.join(__dirname, '..', 'app.log');
 
+if (fs.existsSync(logFilePath)) {
+  fs.unlinkSync(logFilePath);
+  console.log("File deleted");
+}
+
 async function startScheduler(ENV, DEBUG) {
     let initialTimes;
     if (ENV === "production" || DEBUG === true) {
