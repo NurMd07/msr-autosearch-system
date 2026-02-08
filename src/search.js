@@ -19,6 +19,7 @@ dotenv.config({
 });
 const ENV = process.env.ENV || 'production';
 
+const CHROMIUM_PATH = process.env.CHROMIUM_PATH || '/usr/bin/chromium-browser';
 
 const MIN_SEARCH_DELAY_SEC = Number(process.env.MIN_SEARCH_DELAY_SEC) || 16;
 const MAX_SEARCH_DELAY_SEC = Number(process.env.MAX_SEARCH_DELAY_SEC) || 21;
@@ -110,7 +111,7 @@ async function setupPage(page) {
 
 export default async (isMobile = true, iterationCount, maxIteration, isBrowser = false) => {
     const browser = await puppeteer.launch({
-        executablePath: '/usr/bin/chromium-browser',
+        executablePath: `${CHROMIUM_PATH}`,
         headless: false,
         userDataDir: './puppeteer-data', // persistent profile
         args: ['--no-sandbox', '--disable-dev-shm-usage', `--window-size=${isMobile ? onePlusNord4.viewport.width : 600},${isMobile ? onePlusNord4.viewport.height : 400}`],
