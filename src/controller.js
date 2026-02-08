@@ -32,8 +32,8 @@ if (isBrowser) {
     child.on('exit', (code) => {
         console.log(`scheduler.js exited with code ${code}`);
     });
-    process.exit(0);
-}
+   
+}else{
 
 
 
@@ -151,3 +151,5 @@ async function startScheduler(ENV, DEBUG) {
 }
 
 startScheduler(ENV, DEBUG);
+
+}

@@ -118,6 +118,7 @@ export default async (isMobile = true, iterationCount, maxIteration, isBrowser =
 
     // Apply to already-open pages (startup)
     const pages = await browser.pages();
+
     if (isMobile) {
         for (const page of pages) {
             await setupPage(page);
@@ -139,7 +140,11 @@ export default async (isMobile = true, iterationCount, maxIteration, isBrowser =
             }
         });
     }
-    if (isBrowser) return;
+   
+    if (isBrowser){
+
+ return
+    };
 
     async function startSearch(initialSearchNo, maxSearchNo, minDelay, MaxDelay) {
 

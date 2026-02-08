@@ -27,9 +27,9 @@ const HOST = process.env.HOST || 'localhost';
 
 if (isBrowser) {
     console.log(`\n🚀 Running in Browser Mode - ${isMobile ? "Mobile" : "Desktop"}\n`);
+    console.log(isBrowser, isMobile);
     await search(isMobile, 0, 0, isBrowser);
-    process.exit(0);
-}
+}else{
 
 console.log(`Environment: ${process.env.ENV}`);
 
@@ -181,4 +181,6 @@ if (resetTime - completionTime >= currentTime) {
     startSearches(randomTime1, randomTime2)
 } else {
     console.log("Not enough time to complete before reset.");
+}
+
 }
