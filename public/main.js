@@ -18,8 +18,8 @@ dayjs.extend(window.dayjs_plugin_utc);
 dayjs.extend(window.dayjs_plugin_timezone);
 
 // 2. Use it!
-const nyTime = dayjs().tz("America/New_York").format('YYYY-MM-DD HH:mm');
-const istTime = dayjs().tz("Asia/Kolkata").format('YYYY-MM-DD HH:mm');
+const nyTime = dayjs().tz("America/New_York").format('D MMM h:mm A');
+const istTime = dayjs().tz("Asia/Kolkata").format('D MMM h:mm A');
 currentTimeValue.innerText = nyTime;
 
 setInterval(() => {
@@ -34,94 +34,106 @@ function timeLeft(targetTime) {
     const diffInHours = target.diff(now, 'hour');
     return diffInHours > 0 ? diffInHours : 0;
 }
+const hasData = obj =>
+    obj &&
+    typeof obj === "object" &&
+    Object.keys(obj).length > 0;
 
 async function getData() {
     try {
         const data = await axios.get('/data')
-     
+        if(hasData(data.data.schedule)) {
         resetTime.innerHTML = `${dayjs(data.data.schedule.resetTime).tz("America/New_York").format('D MMM h:mm A')}  ⌚`;
+        }else{
+            resetTime.innerHTML = `${dayjs(data.data.status.firstRunTime).tz("America/New_York").format('D MMM h:mm A')}  ⌚`;
+        }
         randomTime1.innerHTML = `<span class="text-[0.65rem] text-gray-400 me-3">(${timeLeft(data.data.schedule.randomTime1)} Hours Left)</span> ${dayjs(data.data.schedule.randomTime1).tz("America/New_York").format('D MMM h:mm A')} `;
         randomTime2.innerHTML = `<span class="text-[0.65rem] text-gray-400 me-3">(${timeLeft(data.data.schedule.randomTime2)} Hours Left)</span> ${dayjs(data.data.schedule.randomTime2).tz("America/New_York").format('D MMM h:mm A')}`;
         completionTime.innerText = `🚀 ${data.data.schedule.completionTime / 1000 / 60} minutes`;
         msrId.innerText = `${data.data.id}`;
-        if (data.data.progress1) {
+        if (hasData(data.data.progress1)) {
+
             if (data.data.progress1.randomTime1IsMobile) {
                 randomTime1Platform.innerText = `(Mobile)`;
                 randomTime2Platform.innerText = `(PC)`;
                 mobileRunning.innerText = data.data.progress1.randomTime1Running ? '✅' : '❌';
                 mobileCompleted.innerText = data.data.progress1.randomTime1Completed ? '✅' : '❌';
-              
-                if (data.data.progress2) {
+
+                if (hasData(data.data.progress2)) {
                     pcRunning.innerText = data.data.progress2.randomTime2Running ? '✅' : '❌';
                     pcCompleted.innerText = data.data.progress2.randomTime2Completed ? '✅' : '❌';
-            
+
                 } else {
                     pcRunning.innerText = '➖';
                     pcCompleted.innerText = '➖';
-             
+
                 }
-                  mobileSchedule.innerText = `${dayjs(data.data.schedule.randomTime1).tz("America/New_York").format('D MMM h:mm A')}`;
+                mobileSchedule.innerText = `${dayjs(data.data.schedule.randomTime1).tz("America/New_York").format('D MMM h:mm A')}`;
                 pcSchedule.innerText = `${dayjs(data.data.schedule.randomTime2).tz("America/New_York").format('D MMM h:mm A')}`;
             } else {
                 randomTime1Platform.innerText = `(PC)`;
                 randomTime2Platform.innerText = `(Mobile)`;
-                if (data.data.progress2) {
+                if (hasData(data.data.progress2)) {
                     mobileRunning.innerText = data.data.progress2.randomTime2Running ? '✅' : '❌';
                     mobileCompleted.innerText = data.data.progress2.randomTime2Completed ? '✅' : '❌';
-              
+
                 } else {
                     mobileRunning.innerText = '➖';
                     mobileCompleted.innerText = '➖';
-              
+
                 }
                 pcRunning.innerText = data.data.progress1.randomTime1Running ? '✅' : '❌';
                 pcCompleted.innerText = data.data.progress1.randomTime1Completed ? '✅' : '❌';
                 mobileSchedule.innerText = `${dayjs(data.data.schedule.randomTime2).tz("America/New_York").format('D MMM h:mm A')}`;
                 pcSchedule.innerText = `${dayjs(data.data.schedule.randomTime1).tz("America/New_York").format('D MMM h:mm A')}`;
             }
-         
-        } else if (data.data.progress2) {
+
+        } else if (hasData(data.data.progress2)) {
             if (data.data.progress2.randomTime2IsMobile) {
                 randomTime2Platform.innerText = `(Mobile)`;
                 randomTime1Platform.innerText = `(PC)`;
                 mobileRunning.innerText = data.data.progress2.randomTime1Running ? '✅' : '❌';
                 mobileCompleted.innerText = data.data.progress2.randomTime1Completed ? '✅' : '❌';
-                
-                if (data.data.progress1) {
+
+                if (hasData(data.data.progress1)) {
                     pcRunning.innerText = data.data.progress1.randomTime2Running ? '✅' : '❌';
                     pcCompleted.innerText = data.data.progress1.randomTime2Completed ? '✅' : '❌';
                     pcSchedule.innerText = '🕒';
                 } else {
                     pcRunning.innerText = '➖';
                     pcCompleted.innerText = '➖';
- 
+
                 }
-                    mobileSchedule.innerText = `${dayjs(data.data.schedule.randomTime2).tz("America/New_York").format('D MMM h:mm A')}`;
+                mobileSchedule.innerText = `${dayjs(data.data.schedule.randomTime2).tz("America/New_York").format('D MMM h:mm A')}`;
                 pcSchedule.innerText = `${dayjs(data.data.schedule.randomTime1).tz("America/New_York").format('D MMM h:mm A')}`;
             } else {
                 randomTime2Platform.innerText = `(PC)`;
                 randomTime1Platform.innerText = `(Mobile)`;
-                if (data.data.progress1) {
+                if (hasData(data.data.progress1)) {
                     mobileRunning.innerText = data.data.progress1.randomTime2Running ? '✅' : '❌';
                     mobileCompleted.innerText = data.data.progress1.randomTime2Completed ? '✅' : '❌';
-    
+
                 } else {
                     mobileRunning.innerText = '➖';
                     mobileCompleted.innerText = '➖';
-              
+
                 }
                 pcRunning.innerText = data.data.progress2.randomTime1Running ? '✅' : '❌';
                 pcCompleted.innerText = data.data.progress2.randomTime1Completed ? '✅' : '❌';
-              mobileSchedule.innerText = `${dayjs(data.data.schedule.randomTime1).tz("America/New_York").format('D MMM h:mm A')}`;
+                mobileSchedule.innerText = `${dayjs(data.data.schedule.randomTime1).tz("America/New_York").format('D MMM h:mm A')}`;
                 pcSchedule.innerText = `${dayjs(data.data.schedule.randomTime2).tz("America/New_York").format('D MMM h:mm A')}`;
             }
         } else {
             mobileRunning.innerText = '➖';
             mobileCompleted.innerText = '➖';
-       
+            randomTime1.innerHTML = '➖';
+            randomTime2.innerHTML = '➖';
+            randomTime1Platform.innerText = '';
+            randomTime2Platform.innerText = '';
+            completionTime.innerText = '🚀 0 minutes';
             pcRunning.innerText = '➖';
             pcCompleted.innerText = '➖';
-           
+
         }
 
     } catch (err) {
@@ -132,14 +144,14 @@ const logContainer = document.querySelector('.log-content');
 const eventSource = new EventSource(`${window.location.origin}/stream-logs`);
 
 eventSource.onmessage = (event) => {
- 
+
     const data = JSON.parse(event.data);
     const lineElement = document.createElement('div');
     const splitIndex = data.message.indexOf(']');
     if (splitIndex === -1) return;
     const timestamp = data.message.slice(0, splitIndex + 1);
     const message = data.message.slice(splitIndex + 2).trim();
-    if(message === '') return;
+    if (message === '') return;
     lineElement.innerHTML = `<span class="font-bold  pe-2 text-gray-500">${timestamp}</span><span> ${message}</span>`;
     logContainer.appendChild(lineElement);
 

@@ -65,24 +65,27 @@ app.get('/stream-logs', (req, res) => {
 
     // 1. Initial State: Track the size
     let fileSize = fs.existsSync(LOG_FILE) ? fs.statSync(LOG_FILE).size : 0;
-         const stream = fs.createReadStream(LOG_FILE);
+    if (fileSize <= 0) {
+        fs.writeFileSync(LOG_FILE, '');
+    }
+    const stream = fs.createReadStream(LOG_FILE);
 
-            stream.on('data', (chunk) => {
-                const lines = chunk.toString().split('\n');
-                lines.forEach(line => {
-                    if (line.trim()) sendLog(line);
-                });
-            });
+    stream.on('data', (chunk) => {
+        const lines = chunk.toString().split('\n');
+        lines.forEach(line => {
+            if (line.trim()) sendLog(line);
+        });
+    });
     // 2. Use Chokidar with 'usePolling' enabled (works everywhere)
     const watcher = chokidar.watch(LOG_FILE, {
         persistent: true,
-        usePolling: true, 
+        usePolling: true,
         interval: 100, // Check every 100ms
     });
 
     watcher.on('change', (path) => {
         const stats = fs.statSync(path);
-        
+
         if (stats.size > fileSize) {
             // Read only the NEW bytes
             const stream = fs.createReadStream(path, {

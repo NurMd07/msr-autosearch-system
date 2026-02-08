@@ -77,8 +77,8 @@ async function runTimes(ENV, DEBUG) {
 const logFilePath = path.join(__dirname, '..', 'app.log');
 
 if (fs.existsSync(logFilePath)) {
-  fs.unlinkSync(logFilePath);
-  console.log("File deleted");
+    fs.writeFileSync(logFilePath, '');
+  
 }
 
 async function startScheduler(ENV, DEBUG) {
@@ -94,7 +94,7 @@ async function startScheduler(ENV, DEBUG) {
         if (ENV === "production" || DEBUG === true) {
             console.log("Starting searches at: ", moment().tz("America/New_York").format("dddd, h:mm A"), "\n");
         }
-        console.log("first start");
+     
         const child = spawn('node', [schedulerPath], { stdio: 'inherit' });
 
         child.on('exit', async (code) => {
