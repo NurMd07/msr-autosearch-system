@@ -126,11 +126,10 @@ async function getData() {
         } else {
             mobileRunning.innerText = '➖';
             mobileCompleted.innerText = '➖';
-            randomTime1.innerHTML = '➖';
-            randomTime2.innerHTML = '➖';
-            randomTime1Platform.innerText = '';
-            randomTime2Platform.innerText = '';
-            completionTime.innerText = '🚀 0 minutes';
+       if(hasData(data.data.schedule)) {
+            mobileSchedule.innerText = `${dayjs(data.data.schedule.randomTime1).tz("America/New_York").format('D MMM h:mm A')}`;
+            pcSchedule.innerText = `${dayjs(data.data.schedule.randomTime2).tz("America/New_York").format('D MMM h:mm A')}`;
+       }
             pcRunning.innerText = '➖';
             pcCompleted.innerText = '➖';
 
