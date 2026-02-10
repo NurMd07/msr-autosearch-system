@@ -1,14 +1,18 @@
 {
   "status": {
-    "firstRun": true,
-    "firstRunTime": 1770627600000
+    "firstRun": false,
+    "firstRunTime": null
   },
   "schedule": {
-    "resetTime": 1770714000000,
+    "resetTime": 1770800400000,
     "completionTime": 20976000,
-    "randomTime1": 1770644071720,
-    "randomTime2": 1770670152626
+    "randomTime1": 1770768458320,
+    "randomTime2": 1770737592097
   },
   "progress1": {},
-  "progress2": {}
+  "progress2": {
+    "randomTime1Running": false,
+    "randomTime1Completed": true,
+    "randomTime1IsMobile": false
+  }
 }

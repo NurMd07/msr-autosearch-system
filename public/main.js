@@ -149,9 +149,12 @@ eventSource.onmessage = (event) => {
     const splitIndex = data.message.indexOf(']');
     if (splitIndex === -1) return;
     const timestamp = data.message.slice(0, splitIndex + 1);
-    const message = data.message.slice(splitIndex + 2).trim();
-    if (message === '') return;
-    lineElement.innerHTML = `<span class="font-bold  pe-2 text-gray-500">${timestamp}</span><span> ${message}</span>`;
+    let message = data.message.slice(splitIndex + 2).trim();
+    if(message.split('=').length - 1 >= 8 ){
+        message = "======================="    
+    }
+    if (message === '' || message.indexOf('doten') !== -1) return;
+    lineElement.innerHTML = `<span class="font-bold text-[0.65rem] pe-2 text-gray-500">${timestamp}</span><span> ${message}</span>`;
     logContainer.appendChild(lineElement);
 
     // Auto-scroll to bottom

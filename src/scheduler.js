@@ -123,8 +123,8 @@ async function startSearches(randomTime1, randomTime2) {
         console.log("\nCompletion Time:", completionTime / (60 * 1000), "minutes\n");
         console.log("Random Search Time 1:", moment(randomTime1).tz("America/New_York").format("dddd, h:mm A"));
         console.log("Random Search Time 2:", moment(randomTime2).tz("America/New_York").format("dddd, h:mm A"), "\n");
-        console.log("Time left for Random Search 1:", Math.ceil((randomTime1 - currentTime) / 1000 / 60 / 60), "hours from now");
-        console.log("Time left for Random Search 2:", Math.ceil((randomTime2 - currentTime) / 1000 / 60 / 60), "hours from now\n");
+        console.log("Time left for Random Search 1️⃣:", Math.ceil((randomTime1 - currentTime) / 1000 / 60 / 60), "hours from now");
+        console.log("Time left for Random Search 2️⃣:", Math.ceil((randomTime2 - currentTime) / 1000 / 60 / 60), "hours from now\n");
         console.log("Time left until reset:", Math.ceil((resetTime - currentTime) / 1000 / 60 / 60), "hours from now");
         console.log("\n================================");
 

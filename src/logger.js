@@ -7,9 +7,10 @@ const originalConsoleLog = console.log;
 
 export default function logMessage(...args) {
     const timestamp = new Date();
-    const formattedTimestamp = `${timestamp.getDay()+1} ${timestamp.toLocaleString('default', { month: 'short' })} ${timestamp.getHours().toString().padStart(2, '0')}:${timestamp.getMinutes().toString().padStart(2, '0')}`;
+
+    const formattedTimestamp = `${timestamp.getDate()} ${timestamp.toLocaleString('default', { month: 'short' })} ${timestamp.getHours().toString().padStart(2, '0')}:${timestamp.getMinutes().toString().padStart(2, '0')}`;
     const message = args.map(arg => (typeof arg === 'string' ? arg : JSON.stringify(arg))).join(' ');
-    const logEntry = `[${formattedTimestamp}] ${message}\n`;
+    const logEntry = `[${formattedTimestamp}] ${message.trim()}\n`;
     fs.appendFile(logFilePath, logEntry, (err) => {
         if (err) {
             console.error('Failed to write log:', err);
