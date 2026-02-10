@@ -6,13 +6,13 @@
   "schedule": {
     "resetTime": 1770800400000,
     "completionTime": 20976000,
-    "randomTime1": 1770768458320,
-    "randomTime2": 1770737592097
+    "randomTime1": 1770778980788,
+    "randomTime2": 1770715791831
   },
   "progress1": {},
   "progress2": {
-    "randomTime1Running": false,
-    "randomTime1Completed": true,
-    "randomTime1IsMobile": false
+    "randomTime2Running": false,
+    "randomTime2Completed": true,
+    "randomTime2IsMobile": false
   }
 }

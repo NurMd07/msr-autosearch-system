@@ -116,10 +116,9 @@ async function getData() {
                 } else {
                     mobileRunning.innerText = '➖';
                     mobileCompleted.innerText = '➖';
-
                 }
-                pcRunning.innerText = data.data.progress2.randomTime1Running ? '✅' : '❌';
-                pcCompleted.innerText = data.data.progress2.randomTime1Completed ? '✅' : '❌';
+                pcRunning.innerText = data.data.progress2.randomTime2Running ? '✅' : '❌';
+                pcCompleted.innerText = data.data.progress2.randomTime2Completed ? '✅' : '❌';
                 mobileSchedule.innerText = `${dayjs(data.data.schedule.randomTime1).tz("America/New_York").format('D MMM h:mm A')}`;
                 pcSchedule.innerText = `${dayjs(data.data.schedule.randomTime2).tz("America/New_York").format('D MMM h:mm A')}`;
             }
