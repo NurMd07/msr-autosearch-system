@@ -42,14 +42,15 @@ const hasData = obj =>
 async function getData() {
     try {
         const data = await axios.get('/data')
-        if(hasData(data.data.schedule)) {
-        resetTime.innerHTML = `${dayjs(data.data.schedule.resetTime).tz("America/New_York").format('D MMM h:mm A')}  ⌚`;
-        }else{
+        if (hasData(data.data.schedule)) {
+            resetTime.innerHTML = `${dayjs(data.data.schedule.resetTime).tz("America/New_York").format('D MMM h:mm A')}  ⌚`;
+            randomTime1.innerHTML = `<span class="text-[0.65rem] text-gray-400 me-3">(${timeLeft(data.data.schedule.randomTime1)} Hours Left)</span> ${dayjs(data.data.schedule.randomTime1).tz("America/New_York").format('D MMM h:mm A')} `;
+            randomTime2.innerHTML = `<span class="text-[0.65rem] text-gray-400 me-3">(${timeLeft(data.data.schedule.randomTime2)} Hours Left)</span> ${dayjs(data.data.schedule.randomTime2).tz("America/New_York").format('D MMM h:mm A')}`;
+            completionTime.innerText = `🚀 ${data.data.schedule.completionTime / 1000 / 60} minutes`;
+        } else {
             resetTime.innerHTML = `${dayjs(data.data.status.firstRunTime).tz("America/New_York").format('D MMM h:mm A')}  ⌚`;
         }
-        randomTime1.innerHTML = `<span class="text-[0.65rem] text-gray-400 me-3">(${timeLeft(data.data.schedule.randomTime1)} Hours Left)</span> ${dayjs(data.data.schedule.randomTime1).tz("America/New_York").format('D MMM h:mm A')} `;
-        randomTime2.innerHTML = `<span class="text-[0.65rem] text-gray-400 me-3">(${timeLeft(data.data.schedule.randomTime2)} Hours Left)</span> ${dayjs(data.data.schedule.randomTime2).tz("America/New_York").format('D MMM h:mm A')}`;
-        completionTime.innerText = `🚀 ${data.data.schedule.completionTime / 1000 / 60} minutes`;
+
         msrId.innerText = `${data.data.id}`;
         if (hasData(data.data.progress1)) {
 
@@ -92,12 +93,12 @@ async function getData() {
             if (data.data.progress2.randomTime2IsMobile) {
                 randomTime2Platform.innerText = `(Mobile)`;
                 randomTime1Platform.innerText = `(PC)`;
-                mobileRunning.innerText = data.data.progress2.randomTime1Running ? '✅' : '❌';
-                mobileCompleted.innerText = data.data.progress2.randomTime1Completed ? '✅' : '❌';
+                mobileRunning.innerText = data.data.progress2.randomTime2Running ? '✅' : '❌';
+                mobileCompleted.innerText = data.data.progress2.randomTime2Completed ? '✅' : '❌';
 
                 if (hasData(data.data.progress1)) {
-                    pcRunning.innerText = data.data.progress1.randomTime2Running ? '✅' : '❌';
-                    pcCompleted.innerText = data.data.progress1.randomTime2Completed ? '✅' : '❌';
+                    pcRunning.innerText = data.data.progress1.randomTime1Running ? '✅' : '❌';
+                    pcCompleted.innerText = data.data.progress1.randomTime1Completed ? '✅' : '❌';
                     pcSchedule.innerText = '🕒';
                 } else {
                     pcRunning.innerText = '➖';
@@ -125,10 +126,10 @@ async function getData() {
         } else {
             mobileRunning.innerText = '➖';
             mobileCompleted.innerText = '➖';
-       if(hasData(data.data.schedule)) {
-            mobileSchedule.innerText = `${dayjs(data.data.schedule.randomTime1).tz("America/New_York").format('D MMM h:mm A')}`;
-            pcSchedule.innerText = `${dayjs(data.data.schedule.randomTime2).tz("America/New_York").format('D MMM h:mm A')}`;
-       }
+            if (hasData(data.data.schedule)) {
+                mobileSchedule.innerText = `${dayjs(data.data.schedule.randomTime1).tz("America/New_York").format('D MMM h:mm A')}`;
+                pcSchedule.innerText = `${dayjs(data.data.schedule.randomTime2).tz("America/New_York").format('D MMM h:mm A')}`;
+            }
             pcRunning.innerText = '➖';
             pcCompleted.innerText = '➖';
 
@@ -149,8 +150,8 @@ eventSource.onmessage = (event) => {
     if (splitIndex === -1) return;
     const timestamp = data.message.slice(0, splitIndex + 1);
     let message = data.message.slice(splitIndex + 2).trim();
-    if(message.split('=').length - 1 >= 8 ){
-        message = "======================="    
+    if (message.split('=').length - 1 >= 8) {
+        message = "======================="
     }
     if (message === '' || message.indexOf('doten') !== -1) return;
     lineElement.innerHTML = `<span class="font-bold text-[0.65rem] pe-2 text-gray-500">${timestamp}</span><span> ${message}</span>`;
