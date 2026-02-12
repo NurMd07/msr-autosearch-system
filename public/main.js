@@ -13,6 +13,25 @@ const pcCompleted = document.querySelector('.pc-content-completed');
 const pcSchedule = document.querySelector('.pc-content-schedule');
 const msrId = document.querySelector('.header .msr-id');
 const currentTimeValue = document.querySelector('.current-time-value');
+
+const pointsHistoryContainer = document.querySelector('.points-history');
+const pointsHistoryBtn = document.querySelector('.points-history-btn');
+const pointsHistoryContainerCloseBtn = pointsHistoryContainer.querySelector('.close-btn');
+
+pointsHistoryBtn.addEventListener('click', () => {
+    pointsHistoryContainer.classList.toggle('hidden');
+});
+
+pointsHistoryContainerCloseBtn.addEventListener('click', () => {
+    pointsHistoryContainer.classList.add('hidden');
+});
+
+document.addEventListener('click', (e) => {
+    if (e.target === pointsHistoryContainer) {
+        pointsHistoryContainer.classList.add('hidden');
+    }
+});
+
 // 1. Activate the plugins
 dayjs.extend(window.dayjs_plugin_utc);
 dayjs.extend(window.dayjs_plugin_timezone);
@@ -133,6 +152,35 @@ async function getData() {
             pcRunning.innerText = '➖';
             pcCompleted.innerText = '➖';
 
+        }
+
+        if (data.data.pointsHistory && data.data.pointsHistory.length > 0) {
+            pointsHistoryContainer.querySelector('.points-history-content').innerHTML = '';
+            data.data.pointsHistory.forEach((entry, index) => {
+                const pointElement = document.createElement('div');
+                pointElement.classList.add('points-history-item', 'flex', 'justify-between', 'w-full');
+                const timestamp = dayjs(entry.timestamp).tz("America/New_York").format('D MMM');
+                const points = entry.points;
+                let pointsDiff;
+
+                if (index === 0) {
+                    pointsDiff = 0;
+                } else {
+                    pointsDiff = Number(entry.points.replace(/,/g, '')) - Number(data.data.pointsHistory[index - 1].points.replace(/,/g, ''));
+
+                }
+                pointElement.innerHTML = `
+                     <span class="date w-1/2 ">${timestamp}</span>
+                    <span class="points w-1/2 bg-gray-200 p-1 rounded">${points}
+                        <span class="points-diff ${index === 0 ? 'text-gray-500' : pointsDiff > 0 ? 'text-green-600' : 'text-red-600'} ps-2">(${pointsDiff > 0 ? '+' : ''}${pointsDiff})</span>
+                    </span>
+                `;
+                pointsHistoryContainer.querySelector('.points-history-content').appendChild(pointElement);
+            });
+        } else {
+            const noDataElement = document.createElement('p');
+            noDataElement.innerText = 'No points history available yet.';
+            pointsHistoryContainer.querySelector('.points-history-content').appendChild(noDataElement);
         }
 
     } catch (err) {

@@ -11,7 +11,7 @@ dotenv.config();
 
 const PORT = process.env.PORT || 3000;
 
-const db = await JSONFilePreset('db.json', { status: {}, schedule: {}, progress1: {}, progress2: {} });
+const db = await JSONFilePreset('db.json', { status: {}, schedule: {}, progress1: {}, progress2: {}, pointsHistory: [] });
 await db.read();
 await db.write();
 
@@ -48,6 +48,20 @@ app.post('/data', async (req, res) => {
     res.json(req.body);
 });
 
+app.post('/clear-logs', (req, res) => {
+    const LOG_FILE = path.resolve(__dirname, 'app.log');
+    fs.writeFileSync(LOG_FILE, '');
+    res.json({ message: 'Logs cleared' });
+});
+
+app.post('/reset-schedule', async (req, res) => {
+    await db.read();
+    db.data.schedule = {};
+    db.data.progress1 = {};
+    db.data.progress2 = {};
+    await db.write();
+    res.json({ message: 'Schedule reset' });
+});
 const LOG_FILE = path.resolve(__dirname, 'app.log');
 
 app.get('/stream-logs', (req, res) => {

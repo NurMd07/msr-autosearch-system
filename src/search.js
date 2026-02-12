@@ -14,8 +14,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 dotenv.config({
-  path: path.join(__dirname, '../.env'),
-  override: true
+    path: path.join(__dirname, '../.env'),
+    override: true
 });
 const ENV = process.env.ENV || 'production';
 
@@ -109,7 +109,7 @@ async function setupPage(page) {
 }
 
 
-export default async (isMobile = true, iterationCount, maxIteration, isBrowser = false) => {
+export default async (isMobile = true, iterationCount, maxIteration, isBrowser = false, isCheckPoints = false) => {
     const browser = await puppeteer.launch({
         executablePath: `${CHROMIUM_PATH}`,
         headless: false,
@@ -141,11 +141,21 @@ export default async (isMobile = true, iterationCount, maxIteration, isBrowser =
             }
         });
     }
-   
-    if (isBrowser){
 
- return
+    if (isBrowser) {
+        return
     };
+
+    if (isCheckPoints) {
+        const page = await browser.newPage();
+        await page.goto(`https://rewards.bing.com/`, { waitUntil: 'networkidle2' });
+        const points = await page.$eval(
+            'p.pointsValue',
+            el => el.textContent.trim()
+        );
+        await browser.close();
+        return points;
+    }
 
     async function startSearch(initialSearchNo, maxSearchNo, minDelay, MaxDelay) {
 
