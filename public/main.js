@@ -44,7 +44,7 @@ currentTimeValue.innerText = nyTime;
 setInterval(() => {
     const nyTime = dayjs().tz("America/New_York").format('D MMM h:mm A');
     currentTimeValue.innerText = nyTime;
-}, 60000); // Update every minute
+}, 10000); 
 
 
 function timeLeft(targetTime) {

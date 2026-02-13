@@ -26,6 +26,7 @@ const HOST = process.env.HOST || 'localhost';
 const ENV = process.env.ENV || 'production';
 const DEBUG = process.env.DEBUG === 'true' || false;
 
+const logFilePath = path.join(__dirname, "../app.log");
 
 const db = await JSONFilePreset('db.json', { status: {}, schedule: {}, progress1: {}, progress2: {}, pointsHistory: [] });
 await db.read();
@@ -64,17 +65,7 @@ if (isBrowser) {
         await axios.post(`http://${HOST}:8000/reset-schedule`).catch((err) => {
             console.error("Error resetting schedule:", err.message);
         });
-        if (ENV === "production") {
-            setInterval(async () => {
-                const points = await search(false, 1, 1, false, true);
-                await db.read();
-                if (db.data.pointsHistory.length > 7) {
-                    db.data.pointsHistory.shift();
-                }
-                db.data.pointsHistory.push({ timestamp: Date.now(), points });
-                await db.write();
-            }, 1000 * 60 * 60 * 23 + (1000 * 60 * 30)); // Every 23.5 hours
-        }
+
     } catch (err) {
         console.log(err);
     }
@@ -135,15 +126,21 @@ if (isBrowser) {
             });
 
             setInterval(async () => {
-
+                if (fs.statSync(logFilePath).size >= (1024 * 256)) {
+                    fs.truncateSync(logFilePath, 0);
+                    console.log("Log file truncated to prevent uncontrolled growth.");
+                    fileSize1 = 0;
+                    fileSize2 = 0;
+                }
                 const child = spawn('node', [schedulerPath], { stdio: 'inherit' });
-                console.log("interval start");
+
                 child.on('exit', async (code) => {
                     console.log(`scheduler.js exited with code ${code}`);
+
                     if (iteration === 2) {
 
                         let currentFileSize = fs.statSync(logFilePath).size;
-
+                        if (currentFileSize <= 0) return; // If file is empty, skip
                         const readStream = fs.createReadStream(logFilePath, {
                             start: fileSize1,
                             end: currentFileSize - 1
@@ -168,6 +165,7 @@ if (isBrowser) {
                         });
 
                     } else {
+
                         iteration++;
 
                         fileSize2 = fs.statSync(logFilePath).size - fileSize1;
@@ -176,6 +174,22 @@ if (isBrowser) {
                 });
             }, ENV === "development" ? 1000 * 60 * 7 : 24 * 60 * 60 * 1000);
 
+            if (ENV === "production") {
+                try {
+                    setInterval(async () => {
+                        const points = await search(false, 1, 1, false, true);
+                        await db.read();
+                        if (db.data.pointsHistory.length > 7) {
+                            db.data.pointsHistory.shift();
+                        }
+                        db.data.pointsHistory.push({ timestamp: Date.now(), points });
+                        await db.write();
+                    }, 1000 * 60 * 60 * 23 + (1000 * 60 * 30)); // Every 23.5 hours
+                } catch (err) {
+                    console.error("Error in points tracking interval:", err.message);
+
+                }
+            }
         }, ENV === "development" ? 1000 : initialTimes.next4AM - initialTimes.currentTime);
 
     }
